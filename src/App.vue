@@ -1,7 +1,7 @@
 <template>
     <div class="nim" id="app">
         <div class="layout">
-            <left-siade></left-siade>
+            <left-siade @cell="openChat"></left-siade>
             <router-view/>
         </div>
         <fullscreen-img></fullscreen-img>
@@ -21,6 +21,14 @@ export default {
     components: {
         FullscreenImg,
         LeftSiade
+    },
+    methods: {
+        openChat(id) {
+            console.log(id)
+        }
+    },
+    created() {
+        console.log(window.innerWidth)
     }
 };
 </script>
@@ -34,8 +42,7 @@ export default {
     text-align: center;
     color: #2c3e50;
     height: 100%;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    box-sizing: border-box;
     background: #fff;
     border: 1px solid #ddd;
 }
@@ -53,6 +60,10 @@ export default {
     .layout {
         display: flex;
         justify-content: space-between;
+        height: 100%;
+    }
+    p {
+        margin: 0;
     }
 }
 </style>

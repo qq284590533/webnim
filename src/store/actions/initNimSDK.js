@@ -23,7 +23,6 @@ export function initNimSDK ({ state, commit, dispatch }, loginInfo) {
     state.nim.disconnect()
   }
   dispatch('showLoading')
-  console.log('SDK:',SDK)
   // 初始化SDK
   window.nim = state.nim = SDK.NIM.getInstance({
     debug: true,
