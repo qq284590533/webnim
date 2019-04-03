@@ -7,7 +7,7 @@ const options = {
     cert: fs.readFileSync('./ssh/cert.pem')
 }
 
-const isProd = process.env.NODE_ENV === "prodution";
+const isProd = process.env.NODE_ENV === "production";
 const https = process.env.IS_HTTPS === "TRUE" ? options : false
 
 module.exports = {

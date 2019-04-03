@@ -27,7 +27,30 @@ export default {
     data () {
         return {
             msgToSent: "",
-            isEmojiShown: false
+            isEmojiShown: false,
+        }
+    },
+    props: {
+        type: String,
+        scene: String,
+        to: String,
+        isRobot: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
+        invalid: {
+            type: Boolean,
+            default: false
+        },
+        invalidHint: {
+            type: String,
+            default: "您无权限发送消息"
+        },
+        advancedTeam: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
