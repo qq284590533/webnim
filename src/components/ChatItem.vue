@@ -89,9 +89,9 @@
 </template>
 
 <script type="text/javascript">
-  import util from '../../utils'
-  import config from '../../configs'
-  import emojiObj from '../../configs/emoji'
+  import util from 'utils'
+  import config from 'configs'
+  import emojiObj from 'configs/emoji'
   var audio = { // 正在播放音频的 audio、target
     $node: null,
     $audio: null,

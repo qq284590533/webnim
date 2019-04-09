@@ -3,12 +3,13 @@
         <div class="top">
             <p class="name">鼎天修理厂</p>
         </div>
-        <div class="chat-main">
-            <p>12</p>
-            <p>12</p>
-            <p>12</p>
-            <p>12</p>
-        </div>
+        <chat-list class="chat-main"
+            type="session"
+            :msglist="msglist"
+            :userInfos="userInfos"
+            :myInfo="myInfo"
+            @msgs-loaded="msgsLoaded"
+        ></chat-list>
         <chat-editor></chat-editor>
         <!-- <div class="chat-editor">
             <div class="tool-box"></div>
@@ -20,6 +21,9 @@
 import getParamsFromHref from "utils/href-resolver";
 import cookie from "utils/cookie";
 import chatEditor from "components/ChatEditor";
+import chatList from "components/ChatList"
+import pageUtil from 'utils/page'
+
 export default {
     data() {
         return {
@@ -29,7 +33,8 @@ export default {
         };
     },
     components: {
-        chatEditor
+        chatEditor,
+        chatList
     },
     /**
      * http://127.0.0.1:8080/#/chat?account=13215651001&token=123456
@@ -48,9 +53,16 @@ export default {
         this.$store.dispatch("updateRefreshState");
     },
     computed: {
-        // isLoading() {
-        //     return this.$store.state.isLoading;
-        // }
+        msglist () {
+            let msgs = this.$store.state.currSessionMsgs
+            return msgs
+        },
+        myInfo () {
+            return this.$store.state.myInfo
+        },
+        userInfos () {
+            return this.$store.state.userInfos
+        },
     },
     watch: {
         // isLoading(newvalue, oldvalue) {
@@ -69,6 +81,9 @@ export default {
         // }
     },
     methods: {
+        msgsLoaded () {
+        pageUtil.scrollChatListDown()
+        },
         login() {}
     }
 };
