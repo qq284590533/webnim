@@ -1,7 +1,5 @@
 <template>
-    <ul id="chat-list" class="m-chat-list p-chat-list">
-        <li class="u-msg item-time" v-if="canLoadMore">---- 上拉加载更多 ----</li>
-        <li class="u-msg item-time" v-else>---- 已无更多记录 ----</li>
+    <ul id="chat-list" class="scroll m-chat-list p-chat-list">
         <chat-item
             v-for="(msg, index) in msglist"
             :type="type"
@@ -91,6 +89,26 @@ export default {
         height: 1.6rem;
         margin-right: 0.2rem;
         vertical-align: bottom;
+    }
+}
+.scroll {
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    &::-webkit-scrollbar-track-piece {
+        background-color: #ebeef3;
+        -webkit-border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:vertical {
+        height: 32px;
+        background-color: #d8dce4;
+        -webkit-border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:horizontal {
+        width: 32px;
+        background-color: #d8dce4;
+        -webkit-border-radius: 4px;
     }
 }
 </style>

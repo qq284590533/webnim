@@ -15,46 +15,31 @@
         </div>
         <chat-emoji v-show="isEmojiShown" @add-emoji="addEmoji"></chat-emoji>
         <div class="textarea-box">
-            <textarea class="scroll"  v-model="msgToSent"></textarea>
+            <textarea class="scroll" v-model="msgToSent" @keyup.ctrl.enter="ctrlEnter" @keyup.enter="sendTextMsg"></textarea>
         </div>
-        <span class="send" @click="sendTextMsg">发 送</span>
+        <span class="send" @click="sendTextMsg">发送(Enter)</span>
     </div>
 </template>
 <script>
-import config from "configs"
-import ChatEmoji from './ChatEmoji'
+import config from "configs";
+import ChatEmoji from "./ChatEmoji";
 export default {
-    data () {
+    data() {
         return {
             msgToSent: "",
-            isEmojiShown: false,
-        }
+            isEmojiShown: false
+        };
     },
     props: {
         type: String,
-        scene: String,
-        to: String,
-        isRobot: {
-            type: Boolean,
-            default() {
-                return false;
-            }
-        },
-        invalid: {
-            type: Boolean,
-            default: false
-        },
-        invalidHint: {
+        scene: {
             type: String,
-            default: "您无权限发送消息"
+            default: "p2p"
         },
-        advancedTeam: {
-            type: Boolean,
-            default: false
-        }
+        to: String
     },
     components: {
-        ChatEmoji,
+        ChatEmoji
     },
     methods: {
         addEmoji(emojiName) {
@@ -62,9 +47,9 @@ export default {
             this.isEmojiShown = false;
         },
         sendTextMsg() {
-            console.log('发送')
+            console.log("发送");
             if (/^\s*$/.test(this.msgToSent)) {
-                this.$message.error('请不要发送空消息');
+                this.$message.error("请不要发送空消息");
             }
             this.msgToSent = this.msgToSent.trim();
             this.$store.dispatch("sendMsg", {
@@ -75,11 +60,12 @@ export default {
             });
             this.msgToSent = "";
         },
-        sendFileMsg() {
-
+        sendFileMsg() {},
+        ctrlEnter() {
+            console.log('ctrl-enter')
         }
-    },
-}
+    }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -103,12 +89,13 @@ export default {
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            i,label {
+            i,
+            label {
                 cursor: pointer;
                 display: block;
                 width: 30px;
                 height: 30px;
-                background-image: url('~assets/static/im/icons.png');
+                background-image: url("~assets/static/im/icons.png");
                 background-repeat: no-repeat;
             }
             .icon-img1 {
@@ -127,7 +114,7 @@ export default {
             }
         }
     }
-    .textarea-box{
+    .textarea-box {
         position: absolute;
         top: 40px;
         width: 100%;
@@ -152,10 +139,11 @@ export default {
         bottom: 10px;
         right: 20px;
         display: block;
-        padding: 4px 14px;
+        padding: 4px 10px;
         border-radius: 4px;
         border: 1px solid #eee;
-        font-size: 14px;
+        line-height: 20px;
+        font-size: 12px;
         background: #3598dc;
         color: #fff;
     }

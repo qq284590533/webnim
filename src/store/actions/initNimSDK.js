@@ -46,7 +46,6 @@ export function initNimSDK ({ state, commit, dispatch }, loginInfo) {
     },
     onerror: function onError (event) {
       // alert(JSON.stringify(event))
-      debugger
       alert('网络连接状态异常')
       location.href = config.loginUrl
     },

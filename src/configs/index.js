@@ -21,7 +21,7 @@ let config = {
   myPhoneIcon: 'http://yx-web.nos.netease.com/webdoc/h5/im/my-phone.png',
   // 本地消息显示数量，会影响性能
   localMsglimit: 36,
-  useDb: false
+  useDb: true
 }
 
 const env = 'online'

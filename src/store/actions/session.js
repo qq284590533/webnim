@@ -6,6 +6,7 @@ import store from '../'
 
 // 如果会话对象不是好友，需要更新好友名片
 function updateSessionAccount(sessions) {
+    console.log('sessions:',sessions)
     let accountsNeedSearch = []
     sessions.forEach(item => {
         if (item.scene === 'p2p') {
@@ -24,11 +25,13 @@ function updateSessionAccount(sessions) {
 
 // onSessions只在初始化完成后回调
 export function onSessions(sessions) {
+    console.log('sessions:',sessions)
     updateSessionAccount(sessions)
     store.commit('updateSessions', sessions)
 }
 
 export function onUpdateSession(session) {
+    console.log('sessions:',sessions)
     let sessions = [session]
     updateSessionAccount(sessions)
     store.commit('updateSessions', sessions)

@@ -168,6 +168,7 @@ export default {
             state.msgs[sessionId] = []
         }
         store.commit('updateMsgByIdClient', msg)
+        console.log(state.msgs)
         let tempMsgs = state.msgs[sessionId]
         let lastMsgIndex = tempMsgs.length - 1
         if (tempMsgs.length === 0 || msg.time >= tempMsgs[lastMsgIndex].time) {

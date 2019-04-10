@@ -18,8 +18,10 @@ export default {
     userUID: null,
     // 用户名片
     myInfo: {},
+
     // 好友/黑名单/陌生人名片, 数据结构如：{cid: {attr: ...}, ...}
     userInfos: {},
+
     // 用户订阅的事件同步, 数据结构如：{cid: {typeid: {...}, ...}, ...}
     userSubscribes: {},
 

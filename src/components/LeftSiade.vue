@@ -3,13 +3,13 @@
         <div class="message-box">
             <h4 class="title">消息</h4>
             <div class="message-list">
-                <div class="cell" v-for="(item,index) in messageList" :key="index" @click="cell(item)">
-                    <p>{{item.name}}</p>
+                <div class="cell" v-for="(session,index) in sessionlist" :key="index" @click.native="enterChat(session)">
+                    <p>{{session.name}}</p>
                 </div>
             </div>
         </div>
         <div ref="demandBox" class="demand-box">
-            <el-collapse v-model="activeName" accordion>
+            <el-collapse v-model="activeName" accordion  v-if="currSessionId!=null">
                 <el-collapse-item name="1">
                     <h4 class="collapse-title" slot="title">当前需求</h4>
                     <div class="demand-item" :style="{height:collapseItemHeight}">
@@ -101,11 +101,15 @@
                     </div>
                 </el-collapse-item>
             </el-collapse>
+            <div v-else>
+                请选择聊天对象
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -123,9 +127,21 @@ export default {
             }]
         };
     },
+    props: {
+        sessionlist:{
+            type: Array,
+            default () {
+                return []
+            }
+        },
+        currSessionId: {
+            type: String,
+            default: ''
+        }
+    },
     methods: {
-        cell(item) {
-            this.$emit('cell',item)
+        enterChat(session) {
+            this.$emit('enterChat',session)
         },
         setHeight() {
             let demandBox = this.$refs.demandBox;

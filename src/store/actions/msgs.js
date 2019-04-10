@@ -25,6 +25,7 @@ export function formatMsg(msg) {
     return msg
 }
 
+// 收到漫游消息
 export function onRoamingMsgs(obj) {
     let msgs = obj.msgs.map(msg => {
         return formatMsg(msg)
@@ -32,6 +33,7 @@ export function onRoamingMsgs(obj) {
     store.commit('updateMsgs', msgs)
 }
 
+// 收到离线消息
 export function onOfflineMsgs(obj) {
     let msgs = obj.msgs.map(msg => {
         return formatMsg(msg)
@@ -39,7 +41,9 @@ export function onOfflineMsgs(obj) {
     store.commit('updateMsgs', msgs)
 }
 
+// 收到消息
 export function onMsg(msg) {
+    console.log('msg:',msg)
     msg = formatMsg(msg)
     store.commit('putMsg', msg)
     if (msg.sessionId === store.state.currSessionId) {
@@ -55,6 +59,7 @@ export function onMsg(msg) {
     }
 }
 
+// 消息发送完毕回调
 function onSendMsgDone(error, msg) {
     store.dispatch('hideLoading')
     if (error) {

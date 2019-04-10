@@ -1,33 +1,23 @@
 <template>
-    <div class="nim" id="app">
-        <div class="layout">
-            <left-siade @cell="openChat"></left-siade>
-            <router-view/>
-        </div>
-        <fullscreen-img></fullscreen-img>
+    <div id="app">
+        <router-view/>
     </div>
 </template>
 
 <script>
-import FullscreenImg from "components/FullscreenImg";
-import LeftSiade from "components/LeftSiade"
-
+import store from './store'
 export default {
     data() {
         return {
-            loading: null
         };
     },
     components: {
-        FullscreenImg,
-        LeftSiade
     },
     methods: {
-        openChat(id) {
-            console.log(id)
-        }
+
     },
     created() {
+        // store.commit('updateSessions', sessions)
         console.log(window.innerWidth)
     }
 };

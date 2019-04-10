@@ -63,10 +63,11 @@ export default {
     padding: 10px;
     bottom: 178px;
     left: 20px;
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
     background: #fff;
+    box-shadow: 1px 2px 5px #eee;
     .content {
         display: flex;
         width: 100%;
