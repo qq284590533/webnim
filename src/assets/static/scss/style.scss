@@ -1,0 +1,76 @@
+.msg-text {
+    .emoji-small {
+        width: 1.4rem;
+        height: 1.4rem;
+        vertical-align: bottom;
+    }
+    img {
+        position: relative;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        vertical-align: bottom;
+    }
+    .file-link{
+        color: #ff5722;
+        .icon-file {
+            display: inline-block;
+            vertical-align: bottom;
+            width: 20px;
+            height: 20px;
+            margin-right: 2px;
+            background: url("~assets/static/icons/file.png");
+            background-size: cover;
+        }
+    }
+}
+
+.chat-fullscreen {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    visibility: hidden;
+    z-index: 98;
+    &.active {
+        visibility: visible;
+        .chat-mask {
+            opacity: 0.7;
+        }
+        .chat-image {
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    .chat-mask,
+    .chat-image {
+        width: 100%;
+        transition: all 0.3s;
+    }
+    .chat-mask {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: #000;
+        opacity: 0;
+        height: 100%;
+    }
+    .chat-image {
+        display: table-cell;
+        max-height: 100%;
+        padding: 50px 0;
+        box-sizing: border-box;
+        text-align: center;
+        transform: scale3d(0, 0, 0);
+        overflow: auto;
+        img {
+            display: inline-block;
+            max-width: 90%;
+            // height: auto;
+        }
+    }
+}

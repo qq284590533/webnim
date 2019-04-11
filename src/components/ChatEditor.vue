@@ -5,17 +5,21 @@
                 <i class="icon-img1"></i>
             </span>
             <span class="icon" title="选择图片">
-                <input id="file1" type="file" ref="fileToSent" @change="sendFileMsg">
-                <label for="file1" class="icon-img2"></label>
+                <input id="file" type="file" ref="fileToSent" @change="sendFileMsg">
+                <label for="file" class="icon-img2"></label>
             </span>
             <span class="icon" title="选择文件">
-                <input id="file2" type="file" ref="fileToSent" @change="sendFileMsg">
-                <label for="file2" class="icon-img3"></label>
+                <label for="file" class="icon-img3"></label>
             </span>
         </div>
         <chat-emoji v-show="isEmojiShown" @add-emoji="addEmoji"></chat-emoji>
         <div class="textarea-box">
-            <textarea class="scroll" v-model="msgToSent" @keyup.ctrl.enter="ctrlEnter" @keyup.enter="sendTextMsg"></textarea>
+            <textarea
+                class="scroll"
+                v-model="msgToSent"
+                @keyup.ctrl.enter="ctrlEnter"
+                @keydown.enter.exact="sendTextMsg"
+            ></textarea>
         </div>
         <span class="send" @click="sendTextMsg">发送(Enter)</span>
     </div>
@@ -46,10 +50,14 @@ export default {
             this.msgToSent += emojiName;
             this.isEmojiShown = false;
         },
-        sendTextMsg() {
+        sendTextMsg(event) {
+            event.cancelBubble = true;
+            event.preventDefault();
+            event.stopPropagation();
             console.log("发送");
             if (/^\s*$/.test(this.msgToSent)) {
                 this.$message.error("请不要发送空消息");
+                return;
             }
             this.msgToSent = this.msgToSent.trim();
             this.$store.dispatch("sendMsg", {
@@ -60,9 +68,25 @@ export default {
             });
             this.msgToSent = "";
         },
-        sendFileMsg() {},
+        sendFileMsg() {
+            let ipt = this.$refs.fileToSent;
+            if (ipt.value) {
+                if (this.type === "session") {
+                    this.$store.dispatch("sendFileMsg", {
+                        scene: this.scene,
+                        to: this.to,
+                        fileInput: ipt
+                    });
+                } else if (this.type === "chatroom") {
+                    this.$store.dispatch("sendChatroomFileMsg", {
+                        fileInput: ipt
+                    });
+                }
+            }
+        },
         ctrlEnter() {
-            console.log('ctrl-enter')
+            this.msgToSent = this.msgToSent + "\r\n";
+            console.log("ctrl-enter");
         }
     }
 };

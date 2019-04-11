@@ -34,10 +34,10 @@ export default {
         };
     },
     props: {
-        currSessionId: {
-            type: String,
-            default: null
-        }
+        // currSessionId: {
+        //     type: String,
+        //     default: null
+        // }
     },
     components: {
         chatEditor,
@@ -47,9 +47,6 @@ export default {
     // 进入该页面，文档被挂载
     mounted() {
         this.$store.dispatch("showLoading");
-        // 此时设置当前会话
-        this.$store.dispatch("setCurrSession", this.currSessionId);
-        console.log(this.currSessionId);
         pageUtil.scrollChatListDown();
 
         setTimeout(() => {
@@ -81,14 +78,14 @@ export default {
         userInfos() {
             return this.$store.state.userInfos;
         },
-        sessionId() {
+        currSessionId() {
             return this.$store.state.currSessionId;
         },
         scene() {
-            return util.parseSession(this.sessionId).scene || null;
+            return util.parseSession(this.currSessionId).scene || null;
         },
         to() {
-            return util.parseSession(this.sessionId).to;
+            return util.parseSession(this.currSessionId).to;
         }
     },
     watch: {},

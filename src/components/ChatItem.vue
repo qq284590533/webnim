@@ -21,7 +21,6 @@
             :time="msg.time"
             :flow="msg.flow"
             :type="msg.type"
-            v-touch:hold="revocateMsg"
             class="msg-item"
         >
             <a class="msg-head" v-if="msg.avatar">
@@ -51,7 +50,7 @@
                 v-html="msg.showText"
             ></span>
             <span v-else-if="msg.type==='file'" class="msg-text">
-                <a :href="msg.fileLink" target="_blank">
+                <a class="file-link" :href="msg.fileLink" target="_blank">
                     <i class="u-icon icon-file"></i>
                     {{msg.showText}}
                 </a>
@@ -64,9 +63,9 @@
                 <div v-if="msg.robotFlow==='out'">{{msg.showText}}</div>
                 <div v-else-if="msg.subType==='bot'">
                     <!-- 多次下发的机器人消息 -->
-                    <div v-for="tmsgs in msg.message">
+                    <div v-for="(tmsgs,index) in msg.message" :key="index">
                         <!-- 多个机器人模板 -->
-                        <div v-for="tmsg in tmsgs">
+                        <div v-for="(tmsg,index) in tmsgs" :key="index">
                             <div v-if="tmsg.type==='text'">
                                 <p>{{tmsg.text}}</p>
                             </div>
@@ -78,12 +77,12 @@
                             <div v-else-if="tmsg.type==='url'">
                                 <a :class="tmsg.style" :href="tmsg.target" target="_blank">
                                     <div v-if="tmsg.image">
-                                        <p v-for="tmsg2 in tmsg.image">
+                                        <p v-for="(tmsg2,index) in tmsg.image"  :key="index">
                                             <img :src="tmsg2.url">
                                         </p>
                                     </div>
                                     <div v-if="tmsg.text">
-                                        <p v-for="tmsg2 in tmsg.text">{{tmsg2.text}}</p>
+                                        <p v-for="(tmsg2,index) in tmsg.text"  :key="index">{{tmsg2.text}}</p>
                                     </div>
                                 </a>
                             </div>
@@ -95,12 +94,12 @@
                                     @click="sendRobotBlockMsg(tmsg, msg)"
                                 >
                                     <div v-if="tmsg.image">
-                                        <p v-for="tmsg2 in tmsg.image">
+                                        <p v-for="(tmsg2,index) in tmsg.image"  :key="index">
                                             <img :src="tmsg2.url">
                                         </p>
                                     </div>
                                     <div v-if="tmsg.text">
-                                        <p v-for="tmsg2 in tmsg.text">{{tmsg2.text}}</p>
+                                        <p v-for="(tmsg2,index) in tmsg.text"  :key="index">{{tmsg2.text}}</p>
                                     </div>
                                 </a>
                             </div>
@@ -317,12 +316,12 @@ export default {
                 if (/\[[^\]]+\]/.test(item.showText)) {
                     let emojiItems = item.showText.match(/\[[^\]]+\]/g);
                     emojiItems.forEach(text => {
-                        let emojiCnt = emojiObj.emojiList.emoji;
-                        if (emojiCnt[text]) {
+                        console.log(emojiObj);
+                        if (emojiObj[text]) {
                             item.showText = item.showText.replace(
                                 text,
                                 `<img class="emoji-small" src="${
-                                    emojiCnt[text].img
+                                    emojiObj[text].img
                                 }">`
                             );
                         }
@@ -498,6 +497,7 @@ export default {
             this.$store.dispatch("continueRobotMsg", robotAccid);
         },
         showFullImg(src) {
+            console.log(src);
             this.$store.dispatch("showFullscreenImg", {
                 src
             });
@@ -622,13 +622,19 @@ export default {
             position: relative;
             border-radius: 5px;
             text-align: left;
-            line-height: 20px;
+            line-height: 1.2em;
+            min-height: 1.2em;
             &::after {
                 position: absolute;
                 top: 15px;
-                content: '';
+                content: "";
                 display: block;
                 border: 10px solid #fff;
+            }
+            .emoji-small {
+                width: 1.4rem;
+                height: 1.4rem;
+                vertical-align: bottom;
             }
         }
         .msg-link {
@@ -636,9 +642,9 @@ export default {
             right: -4rem;
             font-size: 0.9rem;
         }
-        .msg-head{
+        .msg-head {
             display: inline-block;
-            width:48px;
+            width: 48px;
             height: 48px;
             img {
                 width: 100%;

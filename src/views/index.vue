@@ -2,7 +2,7 @@
     <div class="nim">
         <div class="layout">
             <left-siade :currSessionId="currSessionId" :sessionlist="sessionlist" @enterChat="enterChat"></left-siade>
-            <chat :currSessionId="currSessionId"></chat>
+            <chat></chat>
         </div>
         <fullscreen-img></fullscreen-img>
     </div>
@@ -97,6 +97,8 @@ export default {
     },
     methods: {
         enterChat(session) {
+            // 此时设置当前会话
+            this.$store.dispatch("setCurrSession", session.id);
             console.log(session);
         }
     },
@@ -112,6 +114,9 @@ export default {
         this.account = params.account;
         this.sdktoken = params.token;
         this.currSessionId = params.sessionId||null;
+
+        // 此时设置当前会话
+        this.$store.dispatch("setCurrSession", this.currSessionId);
         console.log(params);
         cookie.setCookie("uid", this.account.toLowerCase());
         cookie.setCookie("sdktoken", this.sdktoken);

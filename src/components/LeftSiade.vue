@@ -3,7 +3,7 @@
         <div class="message-box">
             <h4 class="title">消息</h4>
             <div class="message-list">
-                <div class="cell" v-for="(session,index) in sessionlist" :key="index" @click.native="enterChat(session)">
+                <div :class="['cell',session.id==currSessionId?'active':'']" v-for="(session,index) in sessionlist" :key="index" @click="enterChat(session)">
                     <p>{{session.name}}</p>
                 </div>
             </div>
@@ -134,10 +134,11 @@ export default {
                 return []
             }
         },
-        currSessionId: {
-            type: String,
-            default: ''
-        }
+    },
+    computed:{
+        currSessionId() {
+            return this.$store.state.currSessionId;
+        },
     },
     methods: {
         enterChat(session) {
@@ -195,6 +196,9 @@ export default {
                 }
                 &:hover {
                     background: #eee;
+                }
+                &.active {
+                    background:#bae0ff;
                 }
             }
         }
