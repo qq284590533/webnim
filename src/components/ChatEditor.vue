@@ -5,11 +5,12 @@
                 <i class="icon-img1"></i>
             </span>
             <span class="icon" title="选择图片">
-                <input id="file" type="file" ref="fileToSent" @change="sendFileMsg">
-                <label for="file" class="icon-img2"></label>
+                <input id="file1" type="file" accept="image/*" ref="imageToSent" @change="sendFileMsg('imageToSent')">
+                <label for="file1" class="icon-img2"></label>
             </span>
             <span class="icon" title="选择文件">
-                <label for="file" class="icon-img3"></label>
+                <input id="file2" type="file" ref="fileToSent" @change="sendFileMsg('fileToSent')">
+                <label for="file2" class="icon-img3"></label>
             </span>
         </div>
         <chat-emoji v-show="isEmojiShown" @add-emoji="addEmoji"></chat-emoji>
@@ -68,8 +69,8 @@ export default {
             });
             this.msgToSent = "";
         },
-        sendFileMsg() {
-            let ipt = this.$refs.fileToSent;
+        sendFileMsg(refName) {
+            let ipt =  this.$refs[refName];
             if (ipt.value) {
                 if (this.type === "session") {
                     this.$store.dispatch("sendFileMsg", {

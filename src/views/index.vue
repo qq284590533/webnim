@@ -43,9 +43,6 @@ export default {
                     if (item.to !== this.myPhoneId) {
                         userInfo = this.userInfos[item.to];
                     } else {
-                        // userInfo = this.myInfo
-                        // userInfo.alias = '我的手机'
-                        // userInfo.avatar = `${config.myPhoneIcon}`
                         return false;
                     }
                     if (userInfo) {
