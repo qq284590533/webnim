@@ -16,6 +16,7 @@
         <chat-emoji v-show="isEmojiShown" @add-emoji="addEmoji"></chat-emoji>
         <div class="textarea-box">
             <textarea
+                ref="textarea"
                 class="scroll"
                 v-model="msgToSent"
                 @keyup.ctrl.enter="ctrlEnter"
@@ -32,7 +33,7 @@ export default {
     data() {
         return {
             msgToSent: "",
-            isEmojiShown: false
+            isEmojiShown: false,
         };
     },
     props: {
@@ -50,6 +51,7 @@ export default {
         addEmoji(emojiName) {
             this.msgToSent += emojiName;
             this.isEmojiShown = false;
+            this.$refs.textarea.focus();
         },
         sendTextMsg(event) {
             event.cancelBubble = true;

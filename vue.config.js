@@ -26,9 +26,10 @@ module.exports = {
             .set('@', resolve('src'))
             .set('assets', resolve('src/assets'))
             .set('components', resolve('src/components'))
+            .set('common', resolve('src/common'))
             .set('utils', resolve('src/utils'))
             .set('plugins', resolve('src/plugins'))
-            .set('configs', resolve('src/configs'));
+            .set('configs', resolve('src/configs'))
 
     },
     devServer: {
